@@ -187,6 +187,225 @@ class _ReadTransactionScreenState extends State<ReadTransactionScreen> {
                                     ),
                                   ],
                                 ),
+                                Container(
+                                    height: 25,
+                                    width: double.infinity,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Text("SELECT MONTH TO FIND DATA")),
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/1/01";
+                                          var to = "2023/1/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "January",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/2/01";
+                                          var to = "2023/2/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "February",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/3/01";
+                                          var to = "2023/3/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "March",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/4/01";
+                                          var to = "2023/4/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "April",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/5/01";
+                                          var to = "2023/5/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "May",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/6/01";
+                                          var to = "2023/6/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "June",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/7/01";
+                                          var to = "2023/7/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "July",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/8/01";
+                                          var to = "2023/8/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "August",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/9/01";
+                                          var to = "2023/9/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "September",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/10/01";
+                                          var to = "2023/10/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "October",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/11/01";
+                                          var to = "2023/11/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "November",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8,),
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          var from = "2023/12/01";
+                                          var to = "2023/12/30";
+
+                                          controller.allFilterReadData(
+                                              fromDate: from, toDate: to);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "December",
+                                          style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           );

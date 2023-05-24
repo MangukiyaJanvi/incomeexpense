@@ -137,6 +137,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                 child: Obx(
                       () =>
                       ListView.builder(
+                        physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) =>
                             Obx(
                                   () =>
