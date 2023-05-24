@@ -30,54 +30,51 @@ class _ReadTransactionScreenState extends State<ReadTransactionScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
         body: Obx(() => Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     OutlinedButton(
                       onPressed: () {
                         controller.readdata();
                       },
                       child: Text(
-                        "All Transaction",
+                        "All",
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
                     OutlinedButton(
+                      onPressed: () {
+                        controller.filterDataRead(1);
+                      },
+                      child: Column(
+                        children: [
+                          Text(
+                            "Income",
+                            style: TextStyle(
+                                color: Colors.green.shade900, fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                    OutlinedButton(
+                      onPressed: () {
+                        controller.filterDataRead(0);
+                      },
+                      child: Text(
+                        "Expense",
+                        style:
+                            TextStyle(color: Colors.red.shade900, fontSize: 18),
+                      ),
+                    ),
+                    IconButton(
                         onPressed: () {
                           Get.defaultDialog(
                             title: "Add Filter",
                             content: Column(
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    OutlinedButton(
-                                      onPressed: () {
-                                        controller.filterDataRead(1);
-                                      },
-                                      child: Text(
-                                        "Income",
-                                        style: TextStyle(
-                                            color: Colors.grey.shade700,
-                                            fontSize: 18),
-                                      ),
-                                    ),
-                                    OutlinedButton(
-                                      onPressed: () {
-                                        controller.filterDataRead(0);
-                                      },
-                                      child: Text(
-                                        "Expense",
-                                        style: TextStyle(
-                                            color: Colors.grey.shade700,
-                                            fontSize: 18),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -139,6 +136,13 @@ class _ReadTransactionScreenState extends State<ReadTransactionScreen> {
                                               child: child!),
                                         );
                                         controller.toDate.value = date!;
+                                        var from =
+                                            "${controller.fromeDate.value.year}/${controller.fromeDate.value.month}/${controller.fromeDate.value.day}";
+                                        var to =
+                                            "${controller.toDate.value.year}/${controller.toDate.value.month}/${controller.toDate.value.day}";
+                                        controller.allFilterReadData(
+                                            fromDate: from, toDate: to);
+                                        Get.back();
                                       },
                                       child: Obx(
                                         () => Text(
@@ -151,30 +155,43 @@ class _ReadTransactionScreenState extends State<ReadTransactionScreen> {
                                     )
                                   ],
                                 ),
-                                OutlinedButton(
-                                  onPressed: () {
-                                    var from =
-                                        "${controller.fromeDate.value.year}/${controller.fromeDate.value.month}/${controller.fromeDate.value.day}";
-                                    var to =
-                                        "${controller.toDate.value.year}/${controller.toDate.value.month}/${controller.toDate.value.day}";
-                                    controller.allFilterReadData(
-                                        fromDate: from, toDate: to);
-                                  },
-                                  child: Text(
-                                    "Done",
-                                    style: TextStyle(
-                                        color: Colors.grey.shade700,
-                                        fontSize: 18),
-                                  ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    OutlinedButton(
+                                      onPressed: () {
+                                        controller.allFilterReadData(
+                                            payTypes: "online");
+                                        Get.back();
+                                      },
+                                      child: Text(
+                                        "Online",
+                                        style: TextStyle(
+                                            color: Colors.grey.shade700,
+                                            fontSize: 18),
+                                      ),
+                                    ),
+                                    OutlinedButton(
+                                      onPressed: () {
+                                        controller.allFilterReadData(
+                                            payTypes: "cash");
+                                        Get.back();
+                                      },
+                                      child: Text(
+                                        "Cash",
+                                        style: TextStyle(
+                                            color: Colors.grey.shade700,
+                                            fontSize: 18),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           );
                         },
-                        child: Text(
-                          "Filter",
-                          style: TextStyle(color: Colors.black),
-                        )),
+                        icon: Icon(Icons.filter_alt_outlined)),
                   ],
                 ),
                 Expanded(
@@ -196,6 +213,7 @@ class _ReadTransactionScreenState extends State<ReadTransactionScreen> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
+                              color: Colors.white,
                               border: Border.all(color: Colors.black),
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -774,6 +792,10 @@ class _ReadTransactionScreenState extends State<ReadTransactionScreen> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
+                          var date =
+                              "${controller.currentdate.value.year}/${controller.currentdate.value.month}/${controller.currentdate.value.day}";
+                          var time =
+                              "${controller.currenttime.value.hour}/${controller.currenttime.value.minute}";
                           controller.updateData(
                               id: id,
                               category: controller.cate.value,
@@ -781,8 +803,8 @@ class _ReadTransactionScreenState extends State<ReadTransactionScreen> {
                               status: 0,
                               amount: txtAmount.text,
                               paytypes: "${controller.paymenttype.value}",
-                              date: "${controller.currentdate.value}",
-                              time: "${controller.currenttime.value}");
+                              date: "${date}",
+                              time: "${time}");
                           controller.readdata();
                           Get.back();
                         },
@@ -793,6 +815,11 @@ class _ReadTransactionScreenState extends State<ReadTransactionScreen> {
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          var date =
+                              "${controller.currentdate.value.year}/${controller.currentdate.value.month}/${controller.currentdate.value.day}";
+                          var time =
+                              "${controller.currenttime.value.hour}/${controller.currenttime.value.minute}";
+
                           controller.updateData(
                               id: id,
                               category: controller.cate.value,
@@ -800,8 +827,8 @@ class _ReadTransactionScreenState extends State<ReadTransactionScreen> {
                               status: 1,
                               amount: txtAmount.text,
                               paytypes: "${controller.paymenttype.value}",
-                              date: "${controller.currentdate.value}",
-                              time: "${controller.currenttime.value}");
+                              date: "${date}",
+                              time: "${time}");
                           controller.readdata();
                           Get.back();
                         },

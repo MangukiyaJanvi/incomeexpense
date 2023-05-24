@@ -16,11 +16,16 @@ class _IncomeScreenState extends State<IncomeScreen> {
   TextEditingController txtAmount = TextEditingController();
   TextEditingController txtCategory = TextEditingController();
   TextEditingController txtNote = TextEditingController();
-  ReadTransactionController incomeController =
-  Get.put(ReadTransactionController());
+  ReadTransactionController controller = Get.put(ReadTransactionController());
   int income = 0;
   int expance = 0;
   int total = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.readdata();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +60,8 @@ class _IncomeScreenState extends State<IncomeScreen> {
                     height: 10,
                   ),
                   Text(
-                    "₹ ${incomeController.bankBalance}",
+                    "₹ ${controller.TotalIncomeList[0]['SUM(amount)'] -
+                        controller.TotalExpanseList[0]['SUM(amount)']}",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -85,7 +91,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                         Obx(
                               () =>
                               Text(
-                                "₹ ${incomeController.totalExpense}",
+                                "₹ ${controller.TotalExpanseList[0]['SUM(amount)']}",
                                 style: TextStyle(
                                     fontSize: 22, fontWeight: FontWeight.bold),
                               ),
@@ -115,7 +121,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                         ),
                         Obx(() =>
                             Text(
-                              "₹ ${incomeController.totalIncome}",
+                              "₹ ${controller.TotalIncomeList[0]['SUM(amount)']}",
                               style: TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.bold),
                             ))
@@ -124,6 +130,119 @@ class _IncomeScreenState extends State<IncomeScreen> {
                   ),
                 ),
               ],
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Obx(
+                      () =>
+                      ListView.builder(
+                        itemBuilder: (context, index) =>
+                            Obx(
+                                  () =>
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    margin: EdgeInsets.all(5),
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                      children: [
+                                        (controller
+                                            .readTransactionList[index]['status'] ==
+                                            0)
+                                            ? Container(
+                                          height: 40.sp,
+                                          width: 50.sp,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            color: Colors.red.shade100,
+                                            borderRadius: BorderRadius.circular(
+                                                20),
+                                          ),
+                                          child: Icon(
+                                            Icons.trending_down,
+                                            color: Colors.red.shade900,
+                                          ),
+                                        )
+                                            : Container(
+                                          height: 40.sp,
+                                          width: 50.sp,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            color: Colors.green.shade100,
+                                            borderRadius: BorderRadius.circular(
+                                                20),
+                                          ),
+                                          child: Icon(
+                                            Icons.trending_up_sharp,
+                                            color: Colors.green.shade900,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment
+                                                .start,
+                                            children: [
+                                              Text(
+                                                "${controller
+                                                    .readTransactionList[index]['category']}",
+                                                style: TextStyle(fontSize: 18),
+                                              ),
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              Text(
+                                                  "${controller
+                                                      .readTransactionList[index]['date']}"),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: SizedBox(
+                                            width: 10,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              (controller
+                                                  .readTransactionList[index]
+                                              ['status'] ==
+                                                  0)
+                                                  ? Text(
+                                                "-${controller
+                                                    .readTransactionList[index]['amount']}",
+                                                style: TextStyle(
+                                                    color: Colors.red.shade800,
+                                                    fontSize: 18),
+                                              )
+                                                  : Text(
+                                                "+${controller
+                                                    .readTransactionList[index]['amount']}",
+                                                style: TextStyle(
+                                                    color: Colors.green
+                                                        .shade800,
+                                                    fontSize: 18),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                            ),
+                        itemCount: controller.readTransactionList.length,
+                      ),
+                ),
+              ),
             ),
           ],
         ),
@@ -199,8 +318,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                               onPressed: () async {
                                 DateTime? date = await showDatePicker(
                                   context: context,
-                                  initialDate: incomeController.currentdate
-                                      .value,
+                                  initialDate: controller.currentdate.value,
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2030),
                                   builder: (context, child) =>
@@ -218,15 +336,15 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                           ),
                                           child: child!),
                                 );
-                                incomeController.setdate(date!);
+                                controller.setdate(date!);
                               },
                               child: Obx(
                                     () =>
                                     Text(
-                                      "${incomeController.currentdate.value
-                                          .year}/${incomeController.currentdate
-                                          .value.month}/${incomeController
-                                          .currentdate.value.day}",
+                                      "${controller.currentdate.value
+                                          .year}/${controller.currentdate.value
+                                          .month}/${controller.currentdate.value
+                                          .day}",
                                       style: TextStyle(
                                           color: Colors.grey.shade700,
                                           fontSize: 18),
@@ -262,7 +380,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                             onTap: () async {
                               TimeOfDay? pickedtime = await showTimePicker(
                                 context: context,
-                                initialTime: incomeController.currenttime.value,
+                                initialTime: controller.currenttime.value,
                                 builder: (context, child) =>
                                     MediaQuery(
                                         data: MediaQuery.of(context)
@@ -270,7 +388,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                             alwaysUse24HourFormat: true),
                                         child: child!),
                               );
-                              incomeController.currenttime.value = pickedtime!;
+                              controller.currenttime.value = pickedtime!;
                             },
                             child: Container(
                               height: 45.sp,
@@ -287,9 +405,9 @@ class _IncomeScreenState extends State<IncomeScreen> {
                               child: Obx(
                                     () =>
                                     Text(
-                                      "${incomeController.currenttime.value
-                                          .hour}:${incomeController.currenttime
-                                          .value.minute}",
+                                      "${controller.currenttime.value
+                                          .hour}:${controller.currenttime.value
+                                          .minute}",
                                       style: TextStyle(
                                           color: Colors.grey.shade700,
                                           fontSize: 18),
@@ -343,9 +461,8 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                                 itemBuilder: (context, index) =>
                                                     InkWell(
                                                       onTap: () {
-                                                        incomeController
-                                                            .chageCate(
-                                                            incomeController
+                                                        controller.chageCate(
+                                                            controller
                                                                 .categoryList[index]);
                                                         Get.back();
                                                       },
@@ -367,7 +484,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                                         alignment: Alignment
                                                             .center,
                                                         child: Text(
-                                                          "${incomeController
+                                                          "${controller
                                                               .categoryList[index]}",
                                                           style: TextStyle(
                                                               color: Colors
@@ -375,8 +492,8 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                                         ),
                                                       ),
                                                     ),
-                                                itemCount: incomeController
-                                                    .categoryList.length,
+                                                itemCount:
+                                                controller.categoryList.length,
                                               ),
                                         ),
                                       ),
@@ -396,10 +513,9 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                           ),
                                           FloatingActionButton(
                                             onPressed: () {
-                                              incomeController.categoryList
+                                              controller.categoryList
                                                   .add(txtCategory.text);
-                                              print(incomeController
-                                                  .categoryList);
+                                              print(controller.categoryList);
                                             },
                                             backgroundColor: Color(0XFF1E2140),
                                             child: Icon(Icons.done),
@@ -426,7 +542,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                               child: Obx(
                                     () =>
                                     Text(
-                                      "${incomeController.cate}",
+                                      "${controller.cate}",
                                       style: TextStyle(
                                           color: Colors.grey.shade700,
                                           fontSize: 18),
@@ -529,11 +645,11 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                               fontSize: 18),
                                         ),
                                         value: "cash",
-                                        groupValue: incomeController.paymenttype
+                                        groupValue: controller.paymenttype
                                             .value,
                                         onChanged: (value) {
                                           setState(() {
-                                            incomeController.changeType(value);
+                                            controller.changeType(value);
                                             // print("Cash");
                                           });
                                         },
@@ -546,11 +662,11 @@ class _IncomeScreenState extends State<IncomeScreen> {
                                               fontSize: 18),
                                         ),
                                         value: "online",
-                                        groupValue: incomeController.paymenttype
+                                        groupValue: controller.paymenttype
                                             .value,
                                         onChanged: (value) {
                                           setState(() {
-                                            incomeController.changeType(value);
+                                            controller.changeType(value);
                                             // print("Online");
                                           });
                                         },
@@ -612,28 +728,32 @@ class _IncomeScreenState extends State<IncomeScreen> {
                           ElevatedButton(
                             onPressed: () {
                               expance = int.parse(txtAmount.text);
-                              incomeController.totalExpense =
-                                  incomeController.totalExpense + expance;
+                              controller.totalExpense =
+                                  controller.totalExpense + expance;
                               setState(() {
                                 total = total - expance;
                               });
-                              var date = "${incomeController.currentdate.value
-                                  .day}/${incomeController.currentdate.value
-                                  .month}/${incomeController.currentdate.value
-                                  .year}";
-                              var time="${incomeController.currenttime.value.hour}/${incomeController.currenttime.value.minute}";
+                              var date =
+                                  "${controller.currentdate.value
+                                  .year}/${controller.currentdate.value
+                                  .month}/${controller.currentdate.value.day}";
+                              var time =
+                                  "${controller.currenttime.value
+                                  .hour}/${controller.currenttime.value
+                                  .minute}";
 
-                              incomeController.changeexpence();
+                              controller.changeexpence();
                               DbHelper dbHelper = DbHelper();
                               dbHelper.insertData(
-                                  category: incomeController.cate.value,
+                                  category: controller.cate.value,
                                   notes: txtNote.text,
                                   status: 0,
                                   amount: txtAmount.text,
-                                  paytypes: "${incomeController.paymenttype
-                                      .value}",
+                                  paytypes: "${controller.paymenttype.value}",
                                   date: "${date}",
                                   time: "${time}");
+                              controller.TotalExpanse();
+                              controller.readdata();
                               Get.back();
                             },
                             child: Text("Add Expence"),
@@ -645,27 +765,31 @@ class _IncomeScreenState extends State<IncomeScreen> {
                           ElevatedButton(
                             onPressed: () {
                               income = int.parse(txtAmount.text);
-                              incomeController.totalIncome =
-                                  incomeController.totalIncome + income;
+                              controller.totalIncome =
+                                  controller.totalIncome + income;
                               setState(() {
                                 total = total + income;
                               });
-                              var date = "${incomeController.currentdate.value
-                                  .year}/${incomeController.currentdate.value
-                                  .month}/${incomeController.currentdate.value
-                                  .day}";
-                              var time="${incomeController.currenttime.value.hour}/${incomeController.currenttime.value.minute}";
-                              incomeController.changeincome();
+                              var date =
+                                  "${controller.currentdate.value
+                                  .year}/${controller.currentdate.value
+                                  .month}/${controller.currentdate.value.day}";
+                              var time =
+                                  "${controller.currenttime.value
+                                  .hour}/${controller.currenttime.value
+                                  .minute}";
+                              controller.changeincome();
                               DbHelper dbHelper = DbHelper();
                               dbHelper.insertData(
-                                  category: incomeController.cate.value,
+                                  category: controller.cate.value,
                                   notes: txtNote.text,
                                   status: 1,
                                   amount: txtAmount.text,
-                                  paytypes: "${incomeController.paymenttype
-                                      .value}",
+                                  paytypes: "${controller.paymenttype.value}",
                                   date: "${date}",
                                   time: "${time}");
+                              controller.TotalIncome();
+                              controller.readdata();
                               Get.back();
                             },
                             child: Text("Add Income"),
@@ -716,7 +840,7 @@ class _IncomeScreenState extends State<IncomeScreen> {
                 onPressed: () {
                   Get.back();
                 },
-                child: Text(
+                child: const Text(
                   "CLOSE",
                   style: TextStyle(color: Colors.black, fontSize: 20),
                 ),

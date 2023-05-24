@@ -18,7 +18,7 @@ class ReadTransactionController extends GetxController {
   void allFilterReadData({fromDate, toDate, payTypes, status, category}) async {
     DbHelper dbHelper = DbHelper();
     readTransactionList.value =
-        await dbHelper.allFilterRead(fromDate: fromDate, toDate: toDate);
+        await dbHelper.allFilterRead(fromDate: fromDate, toDate: toDate,payTypes: payTypes);
   }
 
   void delete(int id) {
@@ -82,4 +82,18 @@ class ReadTransactionController extends GetxController {
 
   Rx<DateTime> fromeDate = DateTime.now().obs;
   Rx<DateTime> toDate = DateTime.now().obs;
+  RxString paytypes="".obs;
+  RxList<Map> TotalIncomeList = <Map>[].obs;
+  RxList<Map> TotalExpanseList = <Map>[].obs;
+  Future<void> TotalIncome()
+  async {
+    DbHelper dbHelper = DbHelper();
+    TotalIncomeList.value = await dbHelper.totalIncome();
+  }
+
+  Future<void> TotalExpanse()
+  async {
+    DbHelper dbHelper = DbHelper();
+    TotalExpanseList.value = await dbHelper.totalExpanse();
+  }
 }

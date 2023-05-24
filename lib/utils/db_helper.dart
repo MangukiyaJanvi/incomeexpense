@@ -108,12 +108,37 @@ class DbHelper {
         payTypes != null &&
         status != null &&
         category != null) {
+      query =
+          "SELECT * FROM incomeexpence WHERE date>='$fromDate' AND date<='$toDate' AND paytypes='$payTypes' AND status='$status'";
     } else if (fromDate != null && toDate != null) {
       query =
           "SELECT * FROM incomeexpence WHERE date>='$fromDate' AND date<='$toDate'";
+    } else if (payTypes != null) {
+      query = "SELECT * FROM incomeexpence WHERE paytypes='$payTypes'";
+    } else if (fromDate != null && toDate != null && payTypes != null) {
+      query =
+          "SELECT * FROM incomeexpence WHERE date>='$fromDate' AND date<='$toDate' AND paytypes='$payTypes'";
     }
+    print(query);
     List<Map> l1 = await database!.rawQuery(query);
     print(l1);
     return l1;
+  }
+
+
+  Future<List<Map>> totalIncome() async {
+    database = await checkDB();
+    String sql = 'SELECT SUM(amount) FROM incomeexpence WHERE status=1';
+    List<Map> list = await database!.rawQuery(sql);
+    print(list);
+    return list;
+  }
+
+  Future<List<Map>> totalExpanse() async {
+    database = await checkDB();
+    String sql = 'SELECT SUM(amount) FROM incomeexpence WHERE status=0';
+    List<Map> list = await database!.rawQuery(sql);
+    print(list);
+    return list;
   }
 }
