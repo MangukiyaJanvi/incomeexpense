@@ -18,7 +18,6 @@ samples, guidance on mobile development, and a full API reference.
 <img src="https://github.com/MangukiyaJanvi/incomeexpense/assets/114645045/37f566ce-468c-48e3-914d-a107591d2176"width=22%,height=35%>
 <img src="https://github.com/MangukiyaJanvi/incomeexpense/assets/114645045/3c9cd426-6dc7-48d5-9142-566cb6605ef3"width=22%,height=35%>
 <img src="https://github.com/MangukiyaJanvi/incomeexpense/assets/114645045/85b01559-aec5-45d8-b3dd-432e131a8f90"width=22%,height=35%>
-<img src="https://github.com/MangukiyaJanvi/incomeexpense/assets/114645045/b3f982ba-c8f0-4471-bada-ce88ccf3556f"width=22%,height=35%>
 <img src="https://github.com/MangukiyaJanvi/incomeexpense/assets/114645045/dd15303a-02cd-4ee9-bcc5-6fea653f8bc8"width=22%,height=35%>
 <img src="https://github.com/MangukiyaJanvi/incomeexpense/assets/114645045/4cec9b37-3c4e-41fd-9b13-e693a937e978"width=22%,height=35%>
 <p>
